@@ -1,0 +1,83 @@
+{
+  "name": "file-locker",
+  "publisher": "chaseottofy",
+  "displayName": "file-locker",
+  "description": "Lock files from being edited",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.96.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "fileLocker.toggleLock",
+        "title": "Toggle Lock"
+      }
+    ],
+    "menus": {
+      "editor/context": [
+        {
+          "when": "resourceScheme == 'file' && !resourceReadonly && !resourceIsFolder && !resourceIsBinary",
+          "command": "fileLocker.toggleLock",
+          "group": "fileLocker"
+        }
+      ],
+      "explorer/context": [
+        {
+          "when": "resourceScheme == 'file' && !explorerResourceIsFolder",
+          "command": "fileLocker.toggleLock",
+          "group": "fileLocker"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "fileLocker.toggleLock",
+        "key": "ctrl+alt+l",
+        "mac": "cmd+alt+l",
+        "when": "editorTextFocus && editorIsOpen && !terminalFocus && !outputFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run package",
+    "pre": "node ./scripts/create-debug-workspace.mjs",
+    "clean": "rm -rf ./dist/*",
+    "compile": "webpack",
+    "watch": "webpack --watch",
+    "pretest": "npm run compile",
+    "test": "vscode-test",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "lint": "eslint ./src/**/*.ts",
+    "lint:fix": "eslint ./src/**/*.ts --fix"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.17.0",
+    "@types/glob": "^8.1.0",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.17.10",
+    "@types/vscode": "^1.96.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "@vscode/test-cli": "^0.0.10",
+    "@vscode/test-electron": "^2.4.1",
+    "eslint": "^9.16.0",
+    "eslint-import-resolver-typescript": "^3.7.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-unicorn": "^56.0.1",
+    "glob": "^8.1.0",
+    "minimatch": "^5.1.0",
+    "mocha": "^11.0.1",
+    "terser-webpack-plugin": "^5.3.11",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.7.2",
+    "vscode-uri": "^3.0.8",
+    "webpack": "^5.97.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
